@@ -16,8 +16,9 @@
 #ifndef __FANNY_NetService_H__
 #define __FANNY_NetService_H__
 #include "FannyNet.h"
+#include "NetType.h"
+#include <map>
 namespace FannyNet {
-  class IOPool;
   class NetService
   {
   public:
@@ -50,7 +51,8 @@ namespace FannyNet {
     //ÊÇ·ñÔÚrun
     bool isRun() const;
   protected:
-    std::unique_ptr<IOPool> m_pool;
+    IOPoolPtr m_ioPool;
+    std::map<NetName, TcpObjPtr> m_nets;
   private:
     NetService(const NetService&) = delete;
     NetService& operator = (const NetService&) = delete;

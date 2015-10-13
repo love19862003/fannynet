@@ -16,6 +16,7 @@
 #ifndef __FANNY_TcpServer_H__
 #define __FANNY_TcpServer_H__
 #include "FannyNet.h"
+#include "NetType.h"
 #include <list>
 #include <mutex>
 #include <boost/asio/ip/tcp.hpp>
@@ -23,18 +24,10 @@ namespace FannyNet {
   class TcpObj
   {
   public:
-    typedef std::unique_ptr<TcpObj> TcpObjPtr;
     typedef std::function<void()> PostFun;
-    explicit TcpObj(IoPtr io, NetPropertyPointer p);
+    explicit TcpObj(const IOPoolPtr& io, NetPropertyPointer p);
     const NetPropertyPointer& property() const { return m_netProperty; }
-    static TcpObjPtr create(IoPtr io, NetPropertyPointer p);
-
-    IoPtr getIo() {
-      if(!m_io.expired()) {
-        return m_io.lock();
-      }
-      return nullptr;
-    }
+    static TcpObjPtr create(const IOPoolPtr& io, NetPropertyPointer p);
 
     void poll() {
       std::list<PostFun> recv;
@@ -58,8 +51,8 @@ namespace FannyNet {
   protected:
     std::mutex m_mutex;
     std::list<PostFun> m_call;
-    IoWeakPtr m_io;
     NetPropertyPointer m_netProperty;
+    const IOPoolPtr& m_refIOPool;
   private:
   };
   

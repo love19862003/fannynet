@@ -26,7 +26,7 @@
 namespace FannyNet {
   
 
-  NetService::NetService(size_t t) :m_pool(new IOPool(t)) {
+  NetService::NetService(size_t t) :m_ioPool(new IOPool(t)) {
 
   }
   NetService::~NetService() {
@@ -36,23 +36,23 @@ namespace FannyNet {
     return true; 
   }
   void NetService::stop() {
-    m_pool->stop();
+    m_ioPool->stop();
   }
   bool NetService::add(NetPropertyPointer p) {
-    return m_pool->add(std::move(p));
+    return m_ioPool->add(std::move(p));
   }
   bool NetService::remove(const NetName& name) {
     return true;
   }
   bool NetService::poll() {
-    m_pool->poll();
+    m_ioPool->poll();
     return true;
   }
   bool NetService::send(const BlockPtr& msg) {
-    return m_pool->send(msg);
+    return m_ioPool->send(msg);
   }
   bool NetService::send(const NetName& name, const BlockPtr& msg) {
-    return m_pool->send(name, msg);
+    return m_ioPool->send(name, msg);
   }
   bool NetService::kick(const SessionId& id) {
     return true;

@@ -16,19 +16,18 @@
 #ifndef __FANNY_NetSession_H__
 #define __FANNY_NetSession_H__
 #include <boost/asio.hpp>
-#include <boost/logic/tribool.hpp>
 #include <atomic>
 #include "FannyNet.h"
 namespace FannyNet {
   class NetConnection : public std::enable_shared_from_this<NetConnection>
   {
   public:
-    typedef boost::asio::ip::tcp::socket NetSocket;
-    typedef std::unique_ptr<NetSocket> SocketPtr;
-    explicit NetConnection(SessionId s, size_t size, const Config& c, SocketPtr socket);
-    explicit NetConnection();
+    explicit NetConnection(SessionId s, boost::asio::io_service& io, const TcpObjPtr& obj, size_t size = 65535);
     void run();
-    NetSocket& socket();
+    boost::asio::ip::tcp::socket& socket();
+    void onError();
+    std::string getRemotoIp();
+    unsigned int getRemotoPort();
   protected:
     void handleConnect();
     void connectServer();
@@ -37,10 +36,14 @@ namespace FannyNet {
     BufferPtr m_bufferSend;
     BufferPtr m_bufferRecv;
     BlockPtr  m_waitMessage;
-    boost::tribool m_connect;
+    bool      m_connect;
     bool      m_reconn;
     std::atomic<size_t>    m_totalRevc = 0;
     std::atomic<size_t>    m_totalSend = 0;
+    std::atomic_bool       m_isSend;
+    const TcpObjPtr& m_owner;
+    boost::asio::io_service& m_io;
+    typedef std::unique_ptr<boost::asio::ip::tcp::socket> SocketPtr;
     SocketPtr m_socket;
   private:
     NetConnection(const NetConnection&) = delete;

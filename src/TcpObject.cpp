@@ -18,15 +18,13 @@
 namespace FannyNet {
   class TcpServer : public  TcpObj {
   public:
-    explicit TcpServer(IoPtr io, NetPropertyPointer p) : TcpObj(io, std::move(p)) {
+    explicit TcpServer(const IOPoolPtr& io, NetPropertyPointer p) : TcpObj(io, std::move(p)) {
      
     }
     virtual bool start() override {
-      IoPtr io = getIo();
-      if(!io) { return false; }
       try {
         boost::asio::ip::tcp::endpoint ep(boost::asio::ip::tcp::v4(), property()->config().m_port);
-        m_acceptor = std::move(AcceptorPtr(new boost::asio::ip::tcp::acceptor(*io)));
+        m_acceptor = std::move(AcceptorPtr(new boost::asio::ip::tcp::acceptor(m_refIOPool->getIoService())));
         m_acceptor->open(ep.protocol());
         boost::asio::socket_base::reuse_address option(true);
         boost::asio::socket_base::linger optiontemp;
@@ -70,7 +68,7 @@ namespace FannyNet {
   };
   class TcpClient : public TcpObj {
   public:
-    explicit TcpClient(IoPtr io, NetPropertyPointer p) : TcpObj(io, std::move(p)) {
+    explicit TcpClient(const IOPoolPtr& io, NetPropertyPointer p) : TcpObj(io, std::move(p)) {
 
     };
     virtual bool start() override { return true; }
@@ -80,7 +78,7 @@ namespace FannyNet {
   private:
   };
 
-  TcpObj::TcpObjPtr TcpObj::create(IoPtr io, NetPropertyPointer p) {
+  TcpObjPtr TcpObj::create(const IOPoolPtr& io, NetPropertyPointer p) {
     if(nullptr == p) { return nullptr; }
     if(Config::_CLIENT_FLAG_ == p->config().m_serviceType) { return  std::move(TcpObjPtr(new TcpClient(io, std::move(p)))); }
     if(Config::_SERVER_FLAG_ == p->config().m_serviceType) { return  std::move(TcpObjPtr(new TcpServer(io, std::move(p)))); }

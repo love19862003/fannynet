@@ -24,12 +24,8 @@ namespace FannyNet {
   typedef std::function<void(const NetName&, const BlockPtr&)> FunCall;
   typedef std::function<void(const NetName&, const SessionId&)> NetCall;
   typedef std::function<BlockPtr(const SessionId&)> FunMakeBlock;
-  class NetThread;
-  class NetConnection;
 
-  typedef std::shared_ptr<NetThread> ThreadPtr;
-  typedef std::shared_ptr<NetConnection> SessionPtr;
-  typedef std::weak_ptr<NetThread> ThreadWeakPtr;
+
 
   class FINNY_NET_API ServiceData {
   public:

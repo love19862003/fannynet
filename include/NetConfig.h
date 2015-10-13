@@ -37,7 +37,7 @@ namespace FannyNet {
   // net config
   typedef unsigned long long SessionId;
   typedef std::string NetName;
-  enum { INVALID_SESSION_ID = 0,};
+  enum { INVALID_SESSION_ID = 0, };
   struct FINNY_NET_API Config{
     enum ServiceFlag {
       _SERVER_FLAG_,

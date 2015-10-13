@@ -17,21 +17,22 @@
 #define __FANNY_FannyNet_H__
 #include "NetConfig.h"
 #include "NetMessage.h"
+#include "MyLog.h"
 namespace FannyNet {
-
   typedef std::unique_ptr<NetBlockBase> BlockPtr;
   typedef NetBlockBase::BufferPtr BufferPtr;
   typedef std::function<void(const NetName&, const BlockPtr&)> FunCall;
   typedef std::function<void(const NetName&, const SessionId&)> NetCall;
   typedef std::function<BlockPtr(const SessionId&)> FunMakeBlock;
   class NetThread;
-  class NetSession;
+  class NetConnection;
 
   typedef std::shared_ptr<NetThread> ThreadPtr;
-  typedef std::shared_ptr<NetSession> SessionPtr;
+  typedef std::shared_ptr<NetConnection> SessionPtr;
   typedef std::weak_ptr<NetThread> ThreadWeakPtr;
 
   class FINNY_NET_API ServiceData {
+  public:
     explicit ServiceData(const Config& c, FunCall fc, NetCall fct, NetCall fcl, FunMakeBlock fb = nullptr)
     : _config(c)
     , _funCall(fc)
@@ -46,9 +47,10 @@ namespace FannyNet {
       }
     }
     const Config& config() const { return _config; }
-    const FunCall& connectFun() const{return _funConnect;}
-    const FunCall& closeFun() const { return _funClose; }
+    const NetCall& connectFun() const { return _funConnect; }
+    const NetCall& closeFun() const { return _funClose; }
     const FunMakeBlock& makeBlockFun() const { return _funBlock; }
+    const FunCall& callFun()const { return _funCall; }
   protected:
     Config _config;
     FunCall _funCall;
@@ -56,6 +58,6 @@ namespace FannyNet {
     NetCall _funClose;
     FunMakeBlock _funBlock;
   };
-  typedef std::unique_ptr<ServiceData> NetPointer;
+  typedef std::unique_ptr<ServiceData> NetPropertyPointer;
 }
 #endif

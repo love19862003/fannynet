@@ -69,11 +69,12 @@
     <ClInclude Include="..\include\FannyNet.h" />
     <ClInclude Include="..\include\MyLog.h" />
     <ClInclude Include="..\include\NetConfig.h" />
+    <ClInclude Include="..\include\NetIoService.h" />
     <ClInclude Include="..\include\NetManager.h" />
     <ClInclude Include="..\include\NetMessage.h" />
     <ClInclude Include="..\include\NetService.h" />
-    <ClInclude Include="..\include\NetSession.h" />
-    <ClInclude Include="..\include\NetThread.h" />
+    <ClInclude Include="..\include\Connection.h" />
+    <ClInclude Include="..\include\TcpObject.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\src\CMakeLists.txt" />
@@ -81,6 +82,8 @@
   <ItemGroup>
     <ClCompile Include="..\src\NetManager.cpp" />
     <ClCompile Include="..\src\NetMessage.cpp" />
+    <ClCompile Include="..\src\NetService.cpp" />
+    <ClCompile Include="..\src\TcpObject.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

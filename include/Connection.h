@@ -17,15 +17,21 @@
 #define __FANNY_NetSession_H__
 #include <boost/asio.hpp>
 #include <boost/logic/tribool.hpp>
+#include <atomic>
 #include "FannyNet.h"
 namespace FannyNet {
-  class NetSession
+  class NetConnection : public std::enable_shared_from_this<NetConnection>
   {
   public:
     typedef boost::asio::ip::tcp::socket NetSocket;
     typedef std::unique_ptr<NetSocket> SocketPtr;
-    explicit NetSession(SocketPtr );
+    explicit NetConnection(SessionId s, size_t size, const Config& c, SocketPtr socket);
+    explicit NetConnection();
+    void run();
+    NetSocket& socket();
   protected:
+    void handleConnect();
+    void connectServer();
   private:
     SessionId m_session;
     BufferPtr m_bufferSend;
@@ -33,13 +39,13 @@ namespace FannyNet {
     BlockPtr  m_waitMessage;
     boost::tribool m_connect;
     bool      m_reconn;
-    size_t    m_totalRevc = 0;
-    size_t    m_totalSend = 0;
+    std::atomic<size_t>    m_totalRevc = 0;
+    std::atomic<size_t>    m_totalSend = 0;
     SocketPtr m_socket;
   private:
-    NetSession(const NetSession&) = delete;
-    NetSession& operator = (const NetSession&) = delete;
-    NetSession& operator = (NetSession&&) = delete;
+    NetConnection(const NetConnection&) = delete;
+    NetConnection& operator = (const NetConnection&) = delete;
+    NetConnection& operator = (NetConnection&&) = delete;
   };
 }
 #endif

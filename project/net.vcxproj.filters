@@ -33,10 +33,13 @@
     <ClInclude Include="..\include\NetService.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\NetThread.h">
+    <ClInclude Include="..\include\TcpObject.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\NetSession.h">
+    <ClInclude Include="..\include\Connection.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\NetIoService.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -48,6 +51,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="..\src\NetMessage.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\NetService.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\TcpObject.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

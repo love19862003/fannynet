@@ -26,7 +26,7 @@ namespace FannyNet {
       return m_service->start();
     }
 
-    bool NetManager::add(NetPointer net) {
+    bool NetManager::add(NetPropertyPointer net) {
       return m_service->add(std::move(net));
     }
     bool NetManager::remove(const NetName& name) {

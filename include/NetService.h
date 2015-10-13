@@ -17,9 +17,12 @@
 #define __FANNY_NetService_H__
 #include "FannyNet.h"
 namespace FannyNet {
+  class IOPool;
   class NetService
   {
   public:
+    explicit NetService(size_t t);
+    virtual ~NetService();
     //开始服务
     bool start();
 
@@ -27,7 +30,7 @@ namespace FannyNet {
     void stop();
 
     //增加网络
-    bool add(NetPointer p);
+    bool add(NetPropertyPointer p);
 
     //移除一个网络
     bool remove(const NetName& name);
@@ -47,6 +50,7 @@ namespace FannyNet {
     //是否在run
     bool isRun() const;
   protected:
+    std::unique_ptr<IOPool> m_pool;
   private:
     NetService(const NetService&) = delete;
     NetService& operator = (const NetService&) = delete;

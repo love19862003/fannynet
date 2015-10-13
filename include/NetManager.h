@@ -31,7 +31,7 @@ namespace FannyNet {
       void stop();
 
       //增加网络
-      bool add(NetPointer p);
+      bool add(NetPropertyPointer p);
 
       //移除一个网络
       bool remove(const NetName& name);

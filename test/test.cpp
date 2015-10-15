@@ -77,7 +77,8 @@ int main() {
     std::this_thread::sleep_for(std::chrono::milliseconds(1));
     if(isRunning.load()) { isRun = true; } else { 
       auto d = (double)(clock() - currentTick) / CLOCKS_PER_SEC * 1000;
-      isRun = std::chrono::milliseconds(static_cast<long>(d)).count() < 30000;
+      printf("%l", (long)d);
+      isRun = d < 30000;
     }
   }
 

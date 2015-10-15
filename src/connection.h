@@ -30,14 +30,14 @@ namespace FannyNet {
     NetSocket& socket();
     void writeMessage(size_t size);
     void send(BlockPtr p);
-    void handleClose();
+    void handleClose(const NetErrorType& er);
     void beginRead();
     void handleReadSome(const boost::system::error_code& error, std::size_t bytes_transferred);
     void handlAccept();
     void handleWrite(const boost::system::error_code& error, std::size_t size);
     void handleConnect(const boost::system::error_code& error);
-    void onError(const NetErrorType& /*er*/) { close();}
-    void close();
+    void onError(const NetErrorType& er) { close(er);}
+    void close(const NetErrorType& er = NetErrorType());
     void connect(EndPointType ep);
     SessionId id()const { return m_session; }
     void postAccept();

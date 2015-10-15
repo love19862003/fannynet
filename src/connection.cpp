@@ -47,7 +47,16 @@ namespace FannyNet {
 
   }
 
-  void Connection::handleClose() {
+  void Connection::handleClose(const NetErrorType& er) {
+    if (!er){
+      // send all data  then close
+      std::lock_guard<std::mutex> lock(m_mutex);
+      if (m_isSend || !m_sendList.empty() || m_bufferSend->hasRead()){
+        close(er);
+        return;
+      }
+    }
+    
     boost::system::error_code ignored_ec;
     m_socket.shutdown(boost::asio::ip::tcp::socket::shutdown_both, ignored_ec);
     try {
@@ -148,7 +157,7 @@ namespace FannyNet {
   void Connection::connect(EndPointType ep) {
     m_socket.async_connect(ep, boost::bind(&Connection::handleConnect, this, boost::asio::placeholders::error));
   }
-  void Connection::close() {
-    m_property._ioService.post(boost::bind(&Connection::handleClose, shared_from_this()));
+  void Connection::close(const NetErrorType& er) {
+    m_property._ioService.post(boost::bind(&Connection::handleClose, shared_from_this(), er));
   }
 }

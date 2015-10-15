@@ -64,6 +64,7 @@ namespace FannyNet {
     void stop() {
       for(auto& io : m_netIo) { io.reset(); }
       m_netIo.clear();
+      m_onlines.clear();
     }
 
     SessionId nextSession() {

@@ -24,6 +24,11 @@ namespace FannyNet {
   class TcpObj {
   public:
     explicit TcpObj(const IoObjectPoolPtr& io, NetPropertyPointer p) :m_netProperty(std::move(p)), m_refIOPool(io){;}
+    virtual ~TcpObj() {
+      m_call.clear();
+      m_onlines.clear();
+      m_netProperty.reset(nullptr);
+    }
     const NetPropertyPointer& property() const { return m_netProperty; }
     static NetObjectPtr create(const IoObjectPoolPtr& io, NetPropertyPointer p);
 

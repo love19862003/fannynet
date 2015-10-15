@@ -90,6 +90,7 @@ namespace FannyNet {
       }
       return nullptr;
     }
+    bool hasOnline() const { return !m_onlines.empty(); }
   protected:
     void stop() {
       for(auto& io : m_netIo) { io->stop(); io.reset(); }

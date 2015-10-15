@@ -13,8 +13,8 @@
 
   Organization:
 *********************************************************************/
-#include "NetService.h"
-#include "NetManager.h"
+#include "service.h"
+#include "manager.h"
 namespace FannyNet {
     NetManager::NetManager(unsigned int t)
     :m_service(new NetService(t))
@@ -37,11 +37,11 @@ namespace FannyNet {
       return m_service->poll();
     }
 
-    bool NetManager::send(const BlockPtr& msg) {
-      return m_service->send(msg);
+    bool NetManager::send( BlockPtr msg) {
+      return m_service->send(std::move(msg));
     }
-    bool NetManager::send(const NetName& name, const BlockPtr& msg) {
-      return m_service->send(name, msg);
+    bool NetManager::send(const NetName& name,  BlockPtr msg) {
+      return m_service->send(name, std::move(msg));
     }
 
     bool NetManager::kick(const SessionId& id) {

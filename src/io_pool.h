@@ -33,6 +33,12 @@ namespace FannyNet {
       m_thread = std::move(std::thread(fun));
     }
     ~IoObject() {
+       if (m_thread.joinable()){
+         stop();
+       }
+    }
+
+    void stop() {
       m_ios.stop();
       m_thread.join();
     }
@@ -62,7 +68,7 @@ namespace FannyNet {
       return m_netIo[m_curIndex++]->io();
     }
     void stop() {
-      for(auto& io : m_netIo) { io.reset(); }
+      for(auto& io : m_netIo) { io->stop(); io.reset(); }
       m_netIo.clear();
       m_onlines.clear();
     }

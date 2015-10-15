@@ -21,7 +21,7 @@ namespace FannyNet {
     explicit TcpServer(const IoObjectPoolPtr& io, NetPropertyPointer p) : TcpObj(io, std::move(p)) {
 
     }
-    virtual ~TcpServer() { }
+    virtual ~TcpServer() { m_acceptor.reset();  m_current.reset(); }
     virtual bool start() override {
       try {
         EndPointType ep(boost::asio::ip::tcp::v4(), property()->config().m_port);
@@ -47,6 +47,7 @@ namespace FannyNet {
     virtual bool stop() override {
       m_acceptor->close();
       m_acceptor.reset();
+      m_current.reset();
       return true;
     }
     virtual ConnectionProperty createProperty() override {

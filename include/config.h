@@ -54,7 +54,7 @@ namespace FannyNet {
       _CLIENT_FLAG_,
     };
 
-    Config(const std::string& name, const std::string& addr, unsigned int port, int time, int maxConn, const std::string& allow)
+    Config(const std::string& name, const std::string& addr, unsigned int port, int time, int maxConn, const std::string& allow = "")
     : m_name(name)
     , m_address(addr)
     , m_port(port)

@@ -27,11 +27,11 @@ namespace FannyNet {
       //开始服务
       bool start();
 
-      //设置关闭网络
+      //设置关闭网络, 设置后不能发送消息，只能收取消息
       void setStop();
 
-      //
-      void stop(unsigned int time);
+      //关闭必须先 setStop
+      bool stop(unsigned int second);
 
       //增加网络
       bool add(NetPropertyPointer p);

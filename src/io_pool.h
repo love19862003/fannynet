@@ -49,7 +49,7 @@ namespace FannyNet {
   };
   class IoObjectPool {
   public:
-    explicit IoObjectPool(size_t size) :m_curIndex(0) {
+    explicit IoObjectPool(size_t size) :m_curIndex(0), m_curSessionId(INVALID_SESSION_ID) {
       assert(size > 0);
       for(size_t i = 0; i < size; ++i) {
         IoObjectPtr io(new IoObject());
@@ -88,7 +88,7 @@ namespace FannyNet {
     }
   protected:
     size_t m_curIndex = 0;
-    std::atomic<SessionId> m_curSessionId = INVALID_SESSION_ID;
+    std::atomic<SessionId> m_curSessionId;
     std::vector<IoObjectPtr> m_netIo;
     std::map<SessionId, ConnectWeakPtr> m_onlines;
   private:

@@ -49,8 +49,8 @@ namespace FannyNet {
     BufferPtr m_bufferRecv;
     BlockPtr  m_waitMessage;
     bool      m_connect;
-    std::atomic<size_t>    m_totalRevc = 0;
-    std::atomic<size_t>    m_totalSend = 0;
+    std::atomic<size_t>    m_totalRevc;
+    std::atomic<size_t>    m_totalSend;
     std::atomic<bool>      m_isSend;
     std::mutex             m_mutex;
     std::list<BlockPtr>    m_sendList;

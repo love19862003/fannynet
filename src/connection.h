@@ -54,8 +54,8 @@ namespace FannyNet {
     std::atomic<bool>      m_isSend;
     std::mutex             m_mutex;
     std::list<BlockPtr>    m_sendList;
-    NetSocket m_socket;
     ConnectionProperty m_property;
+    NetSocket m_socket;
   private:
     Connection(const Connection&) = delete;
     Connection& operator = (const Connection&) = delete;

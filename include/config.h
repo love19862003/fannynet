@@ -54,7 +54,7 @@ namespace FannyNet {
       _CLIENT_FLAG_,
     };
 
-    Config(const std::string& name, const std::string& addr, unsigned int port, int time, int maxConn) 
+    Config(const std::string& name, const std::string& addr, unsigned int port, int time, int maxConn, const std::string& allow)
     : m_name(name)
     , m_address(addr)
     , m_port(port)
@@ -62,6 +62,7 @@ namespace FannyNet {
     , m_maxConnect(maxConn)
     , m_serviceType(_SERVER_FLAG_)
     , m_autoReconnect(false)
+    , m_allow(allow)
     {
 
     }
@@ -73,6 +74,7 @@ namespace FannyNet {
       , m_maxConnect(1)
       , m_serviceType(_CLIENT_FLAG_)
       , m_autoReconnect(autoConn)
+      , m_allow()
     {
 
     }
@@ -83,6 +85,7 @@ namespace FannyNet {
     int          m_maxConnect;
     ServiceFlag  m_serviceType;
     bool         m_autoReconnect;
+    std::string  m_allow;
   };
 }
 #endif

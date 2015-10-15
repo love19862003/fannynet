@@ -30,6 +30,9 @@ void signalHandler(int /*sig*/) {
 
 int main() {
   NetManager net(3);
+  quitFunction = [&]()->void{
+    net.stop();
+  };
   FunCall fc = [&] (const NetName& name, const BlockPtr& ptr) { 
     std::cout << "handle net:" << name << 
               " session:" << ptr->session() 
@@ -79,6 +82,6 @@ int main() {
     net.poll();
   } while(tick().count()< 3000);
 
-  net.stop();
+  //net.stop();
   return 1;
 }

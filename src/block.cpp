@@ -15,6 +15,7 @@
 *********************************************************************/
 #include "block.h"
 #include "config.h"
+#include <string.h>
 namespace FannyNet {
   NetBlockBase::BlockPtr NetBlock::clone(SessionId s) {
     auto* p = new NetBlock(s);

@@ -18,6 +18,7 @@
 #include <atomic>
 #include <memory>
 #include <mutex>
+#include <list>
 #include "fannynet.h"
 #include "net_type.h"
 namespace FannyNet {

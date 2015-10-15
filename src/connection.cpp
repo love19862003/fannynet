@@ -75,6 +75,7 @@ namespace FannyNet {
   }
 
   void Connection::handleReadSome(const boost::system::error_code& error, std::size_t bytes_transferred) {
+    if(!m_connect) { return; }
     if(error) { onError(error); return; }
     m_bufferRecv->writeData(bytes_transferred);
     m_totalRevc += bytes_transferred;

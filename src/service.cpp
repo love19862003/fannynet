@@ -43,7 +43,6 @@ namespace FannyNet {
     for(auto& pair : m_nets) {
       pair.second->stop();
     }
-    m_ioPool->stop();
   }
   bool NetService::add(NetPropertyPointer p) {
     auto it = m_nets.find(p->config().m_name);

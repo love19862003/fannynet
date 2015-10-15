@@ -62,16 +62,13 @@ namespace FannyNet {
         m_netIo.push_back(std::move(io));
       }
     }
+    virtual ~IoObjectPool() { stop(); }
 
     NetIOService& getIoService() {
       if(m_curIndex >= m_netIo.size()) { m_curIndex = 0; }
       return m_netIo[m_curIndex++]->io();
     }
-    void stop() {
-      for(auto& io : m_netIo) { io->stop(); io.reset(); }
-      m_netIo.clear();
-      m_onlines.clear();
-    }
+   
 
     SessionId nextSession() {
       return ++m_curSessionId;
@@ -92,6 +89,12 @@ namespace FannyNet {
         if(!wp.expired()) { return wp.lock(); }
       }
       return nullptr;
+    }
+  protected:
+    void stop() {
+      for(auto& io : m_netIo) { io->stop(); io.reset(); }
+      m_netIo.clear();
+      m_onlines.clear();
     }
   protected:
     size_t m_curIndex = 0;

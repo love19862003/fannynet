@@ -47,7 +47,6 @@ namespace FannyNet {
     }
 
     void eventRecv(BlockPtr& p) {
-      if(m_stop) { return; }
       auto pp = p.release();
       TcpEvent ev = [this, pp] ()->void { 
         BlockPtr up(pp);
@@ -89,9 +88,9 @@ namespace FannyNet {
     virtual ConnectionProperty createProperty() = 0;
     bool start() { m_stop = false; return doStart(); }
     bool stop() {
+      m_stop = true;
       for (auto& v: m_onlines){ v->close(); }
       return doStop();
-      m_stop = true;
     }
 
     const std::set<ConnectPtr>& onlines() const {

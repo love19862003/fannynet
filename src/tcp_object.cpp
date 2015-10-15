@@ -47,7 +47,6 @@ namespace FannyNet {
     virtual bool doStop() override {
       if(m_acceptor) {m_acceptor->close();}
       m_current->close();
-      m_stop = true;
       return true;
     }
     virtual ConnectionProperty createProperty() override {
@@ -73,7 +72,6 @@ namespace FannyNet {
     typedef std::unique_ptr<boost::asio::ip::tcp::acceptor> AcceptorPtr;
     AcceptorPtr m_acceptor;
     ConnectPtr m_current;
-    bool m_stop = false;
   private:
     TcpServer(const TcpServer&) = delete;
     TcpServer& operator = (const TcpServer&) = delete;

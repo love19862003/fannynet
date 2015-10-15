@@ -45,12 +45,14 @@ namespace FannyNet {
       pair.second->stop();
     }
   }
-  void NetService::stop(unsigned int /*sec*/) {
-    /*boost::timer  t;*/
+  bool NetService::stop(unsigned int sec) {
+    boost::timer  t;
+    if(_STOP_ !=  m_state) { return false; }
     do 
     {
       poll();
-    } while(/*t.elapsed() < sec*/m_ioPool->hasOnline());
+    } while(t.elapsed() < sec*2 || m_ioPool->hasOnline());
+    return true;
   }
   bool NetService::add(NetPropertyPointer p) {
     auto it = m_nets.find(p->config().m_name);

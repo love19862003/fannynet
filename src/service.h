@@ -34,7 +34,7 @@ namespace FannyNet {
     //¹Ø±ÕÍøÂç
     void setStop();
 
-    void stop(unsigned int sec);
+    bool stop(unsigned int sec);
 
     //Ôö¼ÓÍøÂç
     bool add(NetPropertyPointer p);

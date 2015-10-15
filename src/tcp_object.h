@@ -47,6 +47,7 @@ namespace FannyNet {
     }
 
     void eventRecv(BlockPtr& p) {
+      if(m_stop) { return; }
       auto pp = p.release();
       TcpEvent ev = [this, pp] ()->void { 
         BlockPtr up(pp);
@@ -86,10 +87,11 @@ namespace FannyNet {
       pro._eventCloseFun = boost::bind(&TcpObj::eventCloseFun, this, _1);
     }
     virtual ConnectionProperty createProperty() = 0;
-    bool start() { return doStart(); }
+    bool start() { m_stop = false; return doStart(); }
     bool stop() {
       for (auto& v: m_onlines){ v->close(); }
       return doStop();
+      m_stop = true;
     }
 
     const std::set<ConnectPtr>& onlines() const {
@@ -104,6 +106,7 @@ namespace FannyNet {
     std::set<ConnectPtr> m_onlines;
     NetPropertyPointer m_netProperty;
     const IoObjectPoolPtr& m_refIOPool;
+    bool m_stop = true;
   private:
   };
 

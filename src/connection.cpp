@@ -30,6 +30,10 @@ namespace FannyNet {
   }
   Connection::~Connection() {
     //close();
+    m_bufferSend.reset();
+    m_bufferRecv.reset();
+    m_waitMessage.reset();
+    m_sendList.clear();
     m_socket.reset();
   }
   NetSocket& Connection::socket() {

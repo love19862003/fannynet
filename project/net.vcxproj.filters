@@ -13,51 +13,66 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\include\NetManager.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\NetMessage.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\NetConfig.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\MyLog.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\FannyNet.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\NetService.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\TcpObject.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Connection.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\NetIoService.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
+    <Filter Include="main">
+      <UniqueIdentifier>{cb0d20d7-4a36-4db9-b9e9-93325bebf61a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\src\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\NetManager.cpp">
+    <ClInclude Include="..\include\fannynet.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\config.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\net_buffer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\block.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\io_pool.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\tcp_object.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\net_type.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\connection.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\service.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\manager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\net_buffer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\NetMessage.cpp">
+    <ClCompile Include="..\src\block.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\NetService.cpp">
+    <ClCompile Include="..\src\tcp_object.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\TcpObject.cpp">
+    <ClCompile Include="..\src\service.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\manager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\connection.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\test.cpp">
+      <Filter>main</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

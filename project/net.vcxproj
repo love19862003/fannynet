@@ -16,7 +16,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
@@ -44,7 +44,8 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../include/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../include/;../src/</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_WINSOCK_DEPRECATED_NO_WARNINGS;FINNY_NET_STATIC_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -66,24 +67,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\FannyNet.h" />
-    <ClInclude Include="..\include\MyLog.h" />
-    <ClInclude Include="..\include\NetConfig.h" />
-    <ClInclude Include="..\include\NetIoService.h" />
-    <ClInclude Include="..\include\NetManager.h" />
-    <ClInclude Include="..\include\NetMessage.h" />
-    <ClInclude Include="..\include\NetService.h" />
-    <ClInclude Include="..\include\Connection.h" />
-    <ClInclude Include="..\include\TcpObject.h" />
-  </ItemGroup>
-  <ItemGroup>
     <Text Include="..\src\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\NetManager.cpp" />
-    <ClCompile Include="..\src\NetMessage.cpp" />
-    <ClCompile Include="..\src\NetService.cpp" />
-    <ClCompile Include="..\src\TcpObject.cpp" />
+    <ClInclude Include="..\include\config.h" />
+    <ClInclude Include="..\include\fannynet.h" />
+    <ClInclude Include="..\include\manager.h" />
+    <ClInclude Include="..\include\net_buffer.h" />
+    <ClInclude Include="..\src\block.h" />
+    <ClInclude Include="..\src\connection.h" />
+    <ClInclude Include="..\src\io_pool.h" />
+    <ClInclude Include="..\src\service.h" />
+    <ClInclude Include="..\src\net_type.h" />
+    <ClInclude Include="..\src\tcp_object.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\block.cpp" />
+    <ClCompile Include="..\src\connection.cpp" />
+    <ClCompile Include="..\src\manager.cpp" />
+    <ClCompile Include="..\src\service.cpp" />
+    <ClCompile Include="..\src\net_buffer.cpp" />
+    <ClCompile Include="..\src\tcp_object.cpp" />
+    <ClCompile Include="..\src\test.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

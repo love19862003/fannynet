@@ -28,7 +28,6 @@ namespace FannyNet {
 
   }
   NetService::~NetService() {
-    poll();
     m_nets.clear();
     m_ioPool.reset();
   }

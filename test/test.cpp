@@ -18,23 +18,18 @@
 #include <atomic>
 #include <thread>
 #include <signal.h>
+#include <time.h>
+#include <chrono>
 using namespace  FannyNet;
 
 static std::atomic<bool> isRunning(true);
 static std::function<void()> quitFunction = nullptr;
 void signalHandler(int /*sig*/) {
   isRunning = false;
-  if(quitFunction) {
-    quitFunction();
-  }
 }
 
 int main() {
   NetManager net(3);
-  quitFunction = [&] ()->void {
-    net.stop(); 
-  };
-
   FunCall fc = [&] (const NetName& name, const BlockPtr& ptr) { 
     std::cout << "handle net:" << name << 
               " session:" << ptr->session() 
@@ -73,6 +68,17 @@ int main() {
     net.poll();
     std::this_thread::sleep_for(std::chrono::milliseconds(1));
   }
+
+  clock_t currentTick = clock();
+  auto tick = [&] ()->std::chrono::milliseconds {
+    auto d = (double)(clock() - currentTick) / CLOCKS_PER_SEC * 1000;
+    return std::chrono::milliseconds(static_cast<long>(d));
+  };
+
+  do {
+    net.poll();
+  } while(tick().count()< 3000);
+
   net.stop();
   return 1;
 }

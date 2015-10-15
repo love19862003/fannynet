@@ -31,9 +31,7 @@ void signalHandler(int /*sig*/) {
 
 int main() {
   NetManager net(3);
-  clock_t currentTick = clock();
   quitFunction = [&]()->void{
-    currentTick = clock();
     net.setStop();
   };
   FunCall fc = [&] (const NetName& name, const BlockPtr& ptr) { 
@@ -75,10 +73,7 @@ int main() {
     net.poll();
     std::this_thread::sleep_for(std::chrono::milliseconds(1));
   }
-  do 
-  {
-    net.poll();
-  } while (clock() - currentTick  < 3000);
+  net.stop(5);
 
   printf("exit");
   return 1;

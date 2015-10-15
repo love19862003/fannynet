@@ -54,4 +54,7 @@ namespace FannyNet {
     void NetManager::setStop() {
       return m_service->setStop();
     }
+    void NetManager::stop(unsigned int time) {
+      return m_service->stop(time);
+    }
 }

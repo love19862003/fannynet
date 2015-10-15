@@ -30,6 +30,9 @@ namespace FannyNet {
       //设置关闭网络
       void setStop();
 
+      //
+      void stop(unsigned int time);
+
       //增加网络
       bool add(NetPropertyPointer p);
 

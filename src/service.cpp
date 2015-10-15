@@ -18,6 +18,7 @@
 #include <map>
 #include <thread>
 #include <list>
+#include <boost/timer.hpp>
 #include "service.h"
 #include "block.h"
 #include "tcp_object.h"
@@ -43,6 +44,13 @@ namespace FannyNet {
     for(auto& pair : m_nets) {
       pair.second->stop();
     }
+  }
+  void NetService::stop(unsigned int sec) {
+    boost::timer  t;
+    do 
+    {
+      poll();
+    } while (t.elapsed() < sec);
   }
   bool NetService::add(NetPropertyPointer p) {
     auto it = m_nets.find(p->config().m_name);

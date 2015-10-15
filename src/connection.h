@@ -36,7 +36,7 @@ namespace FannyNet {
     void handlAccept();
     void handleWrite(const boost::system::error_code& error, std::size_t size);
     void handleConnect(const boost::system::error_code& error);
-    void onError(const NetErrorType& er) { close();}
+    void onError(const NetErrorType& /*er*/) { close();}
     void close();
     void connect(EndPointType ep);
     SessionId id()const { return m_session; }

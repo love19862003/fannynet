@@ -96,7 +96,6 @@ namespace FannyNet {
       m_endpoint.address(boost::asio::ip::address_v4::from_string(ip));
     };
     virtual ~TcpClient() {
-      m_session->close();
       m_session.reset();
     }
     virtual bool doStart() override {
@@ -104,7 +103,7 @@ namespace FannyNet {
       return true;
     }
     virtual bool doStop() override {
-      m_session->close();
+      
       return true;
     }
     virtual ConnectionProperty createProperty() override {

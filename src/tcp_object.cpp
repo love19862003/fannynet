@@ -48,6 +48,7 @@ namespace FannyNet {
       m_acceptor->close();
       m_acceptor.reset();
       m_current->close();
+      m_stop = true;
       return true;
     }
     virtual ConnectionProperty createProperty() override {
@@ -61,7 +62,7 @@ namespace FannyNet {
       m_acceptor->async_accept(m_current->socket(), boost::bind(&TcpServer::acceptSocket, this, boost::asio::placeholders::error));
     }
     void acceptSocket(const boost::system::error_code& error) {
-      if(!m_current) { return; }
+      if(m_stop || !m_current) { return; }
       if(!error) {
         m_current->postAccept();
       } else {
@@ -73,6 +74,7 @@ namespace FannyNet {
     typedef std::unique_ptr<boost::asio::ip::tcp::acceptor> AcceptorPtr;
     AcceptorPtr m_acceptor;
     ConnectPtr m_current;
+    bool m_stop = false;
   private:
     TcpServer(const TcpServer&) = delete;
     TcpServer& operator = (const TcpServer&) = delete;

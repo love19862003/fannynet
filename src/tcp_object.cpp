@@ -56,6 +56,7 @@ namespace FannyNet {
     }
   private:
     void beginAccept() {
+      if(m_stop) {return; }
       m_current = createConnection();
       m_acceptor->async_accept(m_current->socket(), boost::bind(&TcpServer::acceptSocket, this, boost::asio::placeholders::error));
     }

@@ -46,7 +46,7 @@ namespace FannyNet {
     }
   }
   bool NetService::stop(unsigned int sec) {
-    if(sec <= 0) { sec = 20; }
+    if(sec <= 15) { sec = 20; }
     boost::timer  t;
     if(_STOP_ !=  m_state) { return false; }
     do 

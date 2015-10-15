@@ -1,11 +1,11 @@
 /********************************************************************
 
-  Filename:   FannyNet
+  Filename:   fannynet
 
-  Description:FannyNet
+  Description:fannynet
 
   Version:  1.0
-  Created:  12:10:2015   11:05
+  Created:  14:10:2015   16:23
   Revison:  none
   Compiler: gcc vc
 
@@ -13,33 +13,28 @@
 
   Organization:
 *********************************************************************/
-#ifndef __FANNY_FannyNet_H__
-#define __FANNY_FannyNet_H__
-#include "NetConfig.h"
-#include "NetMessage.h"
-#include "MyLog.h"
+#ifndef __FANNY_fannynet_H__
+#define __FANNY_fannynet_H__
+#include "config.h"
+#include <string>
+#include "net_buffer.h"
 namespace FannyNet {
-  typedef std::unique_ptr<NetBlockBase> BlockPtr;
+  typedef std::shared_ptr<NetBlockBase> BlockPtr;
   typedef NetBlockBase::BufferPtr BufferPtr;
   typedef std::function<void(const NetName&, const BlockPtr&)> FunCall;
   typedef std::function<void(const NetName&, const SessionId&)> NetCall;
-  typedef std::function<BlockPtr(const SessionId&)> FunMakeBlock;
+  typedef std::function<BlockPtr(const SessionId&, size_t)> FunMakeBlock;
 
-
-
-  class FINNY_NET_API ServiceData {
+  class FINNY_NET_API NetProperty {
   public:
-    explicit ServiceData(const Config& c, FunCall fc, NetCall fct, NetCall fcl, FunMakeBlock fb = nullptr)
-    : _config(c)
-    , _funCall(fc)
-    , _funConnect(fct)
-    , _funClose(fcl)
-    , _funBlock(fb){
-      // use default net block call
-      if(nullptr == _funBlock) {
-        _funBlock = [] (const SessionId& id)-> BlockPtr {
-          return std::move(BlockPtr(new NetBlock(id)));
-        }; 
+    explicit NetProperty(const Config& c, FunCall fc, NetCall fct, NetCall fcl, FunMakeBlock fb = nullptr)
+      : _config(c)
+      , _funCall(fc)
+      , _funConnect(fct)
+      , _funClose(fcl)
+      , _funBlock(fb) {
+      if (nullptr == _funBlock){
+        _funBlock = &NetBlockBase::sMakeDefaultBlock;
       }
     }
     const Config& config() const { return _config; }
@@ -54,6 +49,7 @@ namespace FannyNet {
     NetCall _funClose;
     FunMakeBlock _funBlock;
   };
-  typedef std::unique_ptr<ServiceData> NetPropertyPointer;
+  typedef std::unique_ptr<NetProperty> NetPropertyPointer;
 }
+
 #endif

@@ -16,7 +16,7 @@
 #ifndef __NetManager_H__
 #define __NetManager_H__
 #include <memory>
-#include "FannyNet.h"
+#include "fannynet.h"
 namespace FannyNet {
     class NetService;
     class FINNY_NET_API NetManager {
@@ -40,10 +40,10 @@ namespace FannyNet {
       bool poll();
 
       //发送消息
-      bool send(const BlockPtr& msg);
+      bool send( BlockPtr msg);
 
       //发送消息
-      bool send(const NetName& name, const BlockPtr& msg);
+      bool send(const NetName& name,  BlockPtr msg);
 
       //kick
       bool kick(const SessionId& id);

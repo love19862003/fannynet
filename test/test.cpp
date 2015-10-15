@@ -71,16 +71,15 @@ int main() {
   net.add(std::move(c3));
   net.start();
   
-  bool isRun = true;
-  while(isRun) {
+  while(isRunning.load()) {
     net.poll();
     std::this_thread::sleep_for(std::chrono::milliseconds(1));
-    if(isRunning.load()) { isRun = true; } else { 
-      auto d = (double)(clock() - currentTick) / CLOCKS_PER_SEC * 1000;
-      printf("%l", (long)d);
-      isRun = d < 30000;
-    }
   }
+  do 
+  {
+    net.poll();
+  } while (clock() - currentTick  < 3000);
 
+  printf("exit");
   return 1;
 }

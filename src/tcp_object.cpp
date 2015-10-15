@@ -45,8 +45,7 @@ namespace FannyNet {
       return true;
     }
     virtual bool doStop() override {
-      m_acceptor->close();
-      m_acceptor.reset();
+      if(m_acceptor) {m_acceptor->close();}
       m_current->close();
       m_stop = true;
       return true;

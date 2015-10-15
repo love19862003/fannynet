@@ -38,7 +38,7 @@ namespace FannyNet {
     }
     return true; 
   }
-  void NetService::stop() {
+  void NetService::setStop() {
     m_state = _STOP_;
     for(auto& pair : m_nets) {
       pair.second->stop();

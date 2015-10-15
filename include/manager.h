@@ -27,7 +27,7 @@ namespace FannyNet {
       //开始服务
       bool start();
 
-      //关闭网络
+      //设置关闭网络
       void setStop();
 
       //增加网络

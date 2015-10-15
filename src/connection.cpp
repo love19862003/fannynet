@@ -82,7 +82,7 @@ namespace FannyNet {
     while(m_bufferRecv->hasWrite()) {
       auto p = std::move(readMessage());
       if(nullptr == p) { break; } else {
-        m_property._eventPostRecv(std::move(p));
+        m_property._eventPostRecv(p);
       }
     }
 

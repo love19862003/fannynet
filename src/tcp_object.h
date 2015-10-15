@@ -46,8 +46,12 @@ namespace FannyNet {
       m_call.push_back(std::move(ev));
     }
 
-    void eventRecv(BlockPtr p) {
-      TcpEvent ev = boost::bind(m_netProperty->callFun(), m_netProperty->config().m_name, std::move(p));
+    void eventRecv(BlockPtr& p) {
+      auto pp = p.release();
+      TcpEvent ev = [this, pp] ()->void { 
+        BlockPtr up(pp);
+        m_netProperty->callFun()(m_netProperty->config().m_name, boost::cref(up));
+      };
       push(ev);
     }
 

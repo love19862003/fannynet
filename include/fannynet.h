@@ -19,7 +19,7 @@
 #include <string>
 #include "net_buffer.h"
 namespace FannyNet {
-  typedef std::shared_ptr<NetBlockBase> BlockPtr;
+  typedef std::unique_ptr<NetBlockBase> BlockPtr;
   typedef NetBlockBase::BufferPtr BufferPtr;
   typedef std::function<void(const NetName&, const BlockPtr&)> FunCall;
   typedef std::function<void(const NetName&, const SessionId&)> NetCall;

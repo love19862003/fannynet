@@ -44,7 +44,7 @@ namespace FannyNet {
 
   // connection property
   struct ConnectionProperty {
-    typedef std::function<void(BlockPtr)> PostMsgFun;
+    typedef std::function<void(BlockPtr&)> PostMsgFun;
     typedef std::function<void(ConnectPtr)> PostStateFun;
     typedef std::function<void(ConnectPtr )> IOEventPostFun;
     typedef std::function<SocketPtr()> SocketCreateFun;

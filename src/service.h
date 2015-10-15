@@ -21,6 +21,11 @@ namespace FannyNet {
   class NetService
   {
   public:
+    enum state {
+      _INIT_ = 0,
+      _RUN_ = 1,
+      _STOP_ =2,
+    };
     explicit NetService(size_t t);
     virtual ~NetService();
     //开始服务
@@ -52,6 +57,7 @@ namespace FannyNet {
   protected:
     IoObjectPoolPtr m_ioPool;
     std::map<NetName, NetObjectPtr> m_nets;
+    state m_state;
   private:
     NetService(const NetService&) = delete;
     NetService& operator = (const NetService&) = delete;

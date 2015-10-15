@@ -86,12 +86,18 @@ namespace FannyNet {
       pro._eventCloseFun = boost::bind(&TcpObj::eventCloseFun, this, _1);
     }
     virtual ConnectionProperty createProperty() = 0;
-    virtual bool start() = 0;
-    virtual bool stop() = 0;
+    bool start() { return doStart(); }
+    bool stop() {
+      for (auto&v: m_onlines){ v->close(); }
+      return doStop();
+    }
 
     const std::set<ConnectPtr>& onlines() const {
       return m_onlines;
     }
+  protected:
+    virtual bool doStart() = 0;
+    virtual bool doStop() = 0;
   protected:
     std::mutex m_mutex;
     std::list<TcpEvent> m_call;

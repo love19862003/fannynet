@@ -24,7 +24,7 @@
 namespace FannyNet {
   
 
-  NetService::NetService(size_t t) :m_ioPool(new IoObjectPool(t)) {
+  NetService::NetService(size_t t) :m_ioPool(new IoObjectPool(t)), m_state(_INIT_){
 
   }
   NetService::~NetService() {
@@ -32,12 +32,14 @@ namespace FannyNet {
     m_ioPool.reset();
   }
   bool NetService::start() { 
+    m_state = _RUN_;
     for (auto& pair : m_nets){
       if(!pair.second->start()) { return false; }
     }
     return true; 
   }
   void NetService::stop() {
+    m_state = _STOP_;
     for(auto& pair : m_nets) {
       pair.second->stop();
     }
@@ -68,6 +70,7 @@ namespace FannyNet {
     return true;
   }
   bool NetService::send(BlockPtr msg) {
+    if(!isRun()) { return false; }
     ConnectPtr c = m_ioPool->session(msg->session());
     if (c){
       c->send(std::move(msg));
@@ -76,6 +79,7 @@ namespace FannyNet {
     return false;
   }
   bool NetService::send(const NetName& name,  BlockPtr msg) {
+    if(!isRun()) { return false; }
     auto it = m_nets.find(name);
     if(it == m_nets.end()) { return false; }
     auto& net = it->second;
@@ -90,7 +94,7 @@ namespace FannyNet {
     return true;
   }
   bool NetService::isRun() const {
-    return true;
+    return _RUN_ == m_state;
   }
 
 }

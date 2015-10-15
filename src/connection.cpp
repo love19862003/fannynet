@@ -25,8 +25,9 @@ namespace FannyNet {
   , m_totalSend(0)
   , m_isSend(false)
   , m_property(pro)
+  , m_socket(m_property._ioService)
   { 
-    m_socket = std::move(SocketPtr(new NetSocket(m_property._ioService)));
+   
   }
   Connection::~Connection() {
     //close();
@@ -34,10 +35,9 @@ namespace FannyNet {
     m_bufferRecv.reset();
     m_waitMessage.reset();
     m_sendList.clear();
-    m_socket.reset();
   }
   NetSocket& Connection::socket() {
-    return *m_socket;
+    return m_socket;
   }
 
   void Connection::send(BlockPtr p) {
@@ -49,16 +49,16 @@ namespace FannyNet {
 
   void Connection::handleClose() {
     boost::system::error_code ignored_ec;
-    m_socket->shutdown(boost::asio::ip::tcp::socket::shutdown_both, ignored_ec);
+    m_socket.shutdown(boost::asio::ip::tcp::socket::shutdown_both, ignored_ec);
     try {
-      m_socket->close();
+      m_socket.close();
     } catch(const boost::system::error_code&) {
 
     }
     m_connect = false;
   }
   void Connection::beginRead() {
-    m_socket->async_read_some(boost::asio::buffer(m_bufferRecv->writeData(), m_bufferRecv->maxLength() - m_bufferRecv->length()),
+    m_socket.async_read_some(boost::asio::buffer(m_bufferRecv->writeData(), m_bufferRecv->maxLength() - m_bufferRecv->length()),
                               boost::bind(&Connection::handleReadSome, this,
                               boost::asio::placeholders::error,
                               boost::asio::placeholders::bytes_transferred));
@@ -87,7 +87,7 @@ namespace FannyNet {
     }
 
     //¼ÌÐø¶ÁÈ¡ 
-    m_socket->async_read_some(boost::asio::buffer(m_bufferRecv->writeData(), m_bufferRecv->maxLength() - m_bufferRecv->length()),
+    m_socket.async_read_some(boost::asio::buffer(m_bufferRecv->writeData(), m_bufferRecv->maxLength() - m_bufferRecv->length()),
                               boost::bind(&Connection::handleReadSome, this,
                               boost::asio::placeholders::error,
                               boost::asio::placeholders::bytes_transferred));
@@ -145,7 +145,7 @@ namespace FannyNet {
 
   }
   void Connection::connect(EndPointType ep) {
-    m_socket->async_connect(ep, boost::bind(&Connection::handleConnect, this, boost::asio::placeholders::error));
+    m_socket.async_connect(ep, boost::bind(&Connection::handleConnect, this, boost::asio::placeholders::error));
   }
   void Connection::close() {
     m_property._ioService.post(boost::bind(&Connection::handleClose, shared_from_this()));

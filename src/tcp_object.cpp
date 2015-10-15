@@ -22,7 +22,7 @@ namespace FannyNet {
 
     }
     virtual ~TcpServer() { m_acceptor.reset();  m_current.reset(); }
-    virtual bool start() override {
+    virtual bool doStart() override {
       try {
         EndPointType ep(boost::asio::ip::tcp::v4(), property()->config().m_port);
         m_acceptor = std::move(AcceptorPtr(new NetAcceptor(m_refIOPool->getIoService())));
@@ -44,7 +44,7 @@ namespace FannyNet {
       beginAccept();
       return true;
     }
-    virtual bool stop() override {
+    virtual bool doStop() override {
       m_acceptor->close();
       m_acceptor.reset();
       m_current.reset();
@@ -99,11 +99,11 @@ namespace FannyNet {
       m_session->close();
       m_session.reset();
     }
-    virtual bool start() override {
+    virtual bool doStart() override {
       m_session->connect(m_endpoint);
       return true;
     }
-    virtual bool stop() override {
+    virtual bool doStop() override {
       m_session->close();
       return true;
     }

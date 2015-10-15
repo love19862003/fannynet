@@ -51,7 +51,7 @@ namespace FannyNet {
     bool NetManager::isRun() const {
       return m_service->isRun();
     }
-    void NetManager::stop() {
+    void NetManager::setStop() {
       return m_service->stop();
     }
 }

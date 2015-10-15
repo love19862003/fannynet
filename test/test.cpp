@@ -31,8 +31,10 @@ void signalHandler(int /*sig*/) {
 
 int main() {
   NetManager net(3);
+  clock_t currentTick = clock();
   quitFunction = [&]()->void{
-    net.stop();
+    currentTick = clock();
+    net.setStop();
   };
   FunCall fc = [&] (const NetName& name, const BlockPtr& ptr) { 
     std::cout << "handle net:" << name << 
@@ -68,21 +70,16 @@ int main() {
   net.add(std::move(c2));
   net.add(std::move(c3));
   net.start();
-  while(isRunning.load()) {
+  
+  bool isRun = true;
+  while(isRun) {
     net.poll();
     std::this_thread::sleep_for(std::chrono::milliseconds(1));
+    if(isRunning.load()) { isRun = true; } else { 
+      auto d = (double)(clock() - currentTick) / CLOCKS_PER_SEC * 1000;
+      isRun = std::chrono::milliseconds(static_cast<long>(d)).count() < 30000;
+    }
   }
 
-  clock_t currentTick = clock();
-  auto tick = [&] ()->std::chrono::milliseconds {
-    auto d = (double)(clock() - currentTick) / CLOCKS_PER_SEC * 1000;
-    return std::chrono::milliseconds(static_cast<long>(d));
-  };
-
-  do {
-    net.poll();
-  } while(tick().count()< 3000);
-
-  //net.stop();
   return 1;
 }

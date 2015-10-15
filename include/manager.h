@@ -28,7 +28,7 @@ namespace FannyNet {
       bool start();
 
       //¹Ø±ÕÍøÂç
-      void stop();
+      void setStop();
 
       //Ôö¼ÓÍøÂç
       bool add(NetPropertyPointer p);

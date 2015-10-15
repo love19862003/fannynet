@@ -69,6 +69,7 @@ namespace FannyNet {
         m_netProperty->closeFun()(m_netProperty->config().m_name, s->id());
         m_refIOPool->delSession(s);
         m_onlines.erase(s);
+        printf("del session");
       };
       push(fun);
     };

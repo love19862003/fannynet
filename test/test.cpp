@@ -60,10 +60,10 @@ int main() {
   signal(SIGABRT, signalHandler);
   signal(SIGINT, signalHandler);
 
-  NetPropertyPointer s1(new NetProperty(Config("s1", "127.0.0.1", 10000, 1000, 2000), fc, nc, ncc));
-  NetPropertyPointer c1(new NetProperty(Config("c1", "127.0.0.1", 10000, true), fc, nc, ncc));
-  NetPropertyPointer c2(new NetProperty(Config("c2", "127.0.0.1", 10000, true), fc, nc, ncc));
-  NetPropertyPointer c3(new NetProperty(Config("c3", "127.0.0.1", 10000, true), fc, nc, ncc));
+  NetPropertyPointer s1(new NetProperty(Config("s1", "127.0.0.1", 9812, 1000, 2000), fc, nc, ncc));
+  NetPropertyPointer c1(new NetProperty(Config("c1", "127.0.0.1", 9812, true), fc, nc, ncc));
+  NetPropertyPointer c2(new NetProperty(Config("c2", "127.0.0.1", 9812, true), fc, nc, ncc));
+  NetPropertyPointer c3(new NetProperty(Config("c3", "127.0.0.1", 9812, true), fc, nc, ncc));
   net.add(std::move(s1));
   net.add(std::move(c1));
   net.add(std::move(c2));

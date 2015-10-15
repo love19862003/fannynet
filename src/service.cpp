@@ -52,7 +52,7 @@ namespace FannyNet {
     do 
     {
       poll();
-    } while(t.elapsed() < sec || m_ioPool->hasOnline());
+    } while(t.elapsed() < sec && m_ioPool->hasOnline());
     return true;
   }
   bool NetService::add(NetPropertyPointer p) {

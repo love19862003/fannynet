@@ -88,7 +88,7 @@ namespace FannyNet {
     virtual ConnectionProperty createProperty() = 0;
     bool start() { return doStart(); }
     bool stop() {
-      for (auto&v: m_onlines){ v->close(); }
+      for (auto& v: m_onlines){ v->close(); }
       return doStop();
     }
 

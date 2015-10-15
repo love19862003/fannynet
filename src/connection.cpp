@@ -55,6 +55,7 @@ namespace FannyNet {
     } catch(const boost::system::error_code&) {
 
     }
+    m_property._eventCloseFun(shared_from_this());
     m_connect = false;
   }
   void Connection::beginRead() {

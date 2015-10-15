@@ -101,7 +101,7 @@ namespace FannyNet {
       m_session.reset();
     }
     virtual bool doStart() override {
-      m_session->connect(m_endpoint);
+      if(m_session) { m_session->connect(m_endpoint); }
       return true;
     }
     virtual bool doStop() override {

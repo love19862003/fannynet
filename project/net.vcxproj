@@ -88,7 +88,7 @@
     <ClCompile Include="..\src\service.cpp" />
     <ClCompile Include="..\src\net_buffer.cpp" />
     <ClCompile Include="..\src\tcp_object.cpp" />
-    <ClCompile Include="..\src\test.cpp" />
+    <ClCompile Include="..\test\test.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -71,7 +71,7 @@
     <ClCompile Include="..\src\connection.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\test.cpp">
+    <ClCompile Include="..\test\test.cpp">
       <Filter>main</Filter>
     </ClCompile>
   </ItemGroup>

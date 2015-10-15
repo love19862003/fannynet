@@ -26,6 +26,7 @@ static std::atomic<bool> isRunning(true);
 static std::function<void()> quitFunction = nullptr;
 void signalHandler(int /*sig*/) {
   isRunning = false;
+  if(quitFunction) { quitFunction(); }
 }
 
 int main() {

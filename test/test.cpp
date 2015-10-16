@@ -42,8 +42,8 @@ int main() {
 //               << " msg:" << std::string(ptr->data()->data(), ptr->data()->length()) << std::endl;
 
     RedisBlock* p = static_cast<RedisBlock*>(ptr.get());
-    for(auto& vv : p->debug()) { std::cout <<"redis command recv:" << vv << std::endl; }
-     std::string msg = RedisCommand::makeCommand("get player");
+    for(auto& vv : p->debug()) { std::cout <<"redis command recv: " << vv << std::endl; }
+    std::string msg = RedisCommand::makeCommand("get", {"player"});
      BlockPtr pp(new RedisBlock(ptr->session(),msg.length()));
      pp->push(msg.data(), msg.length());
      net.send(std::move(pp));
@@ -51,7 +51,7 @@ int main() {
 
   NetCall nc = [&] (const NetName& name, const SessionId& s) {
     std::cout << "add net:" << name << " session:" << s << std::endl;
-    std::string msg = RedisCommand::makeCommand("set player a1");
+    std::string msg = RedisCommand::makeCommand("set", {"player", "a1"});
     BlockPtr p(new RedisBlock(s, msg.length()));
     p->push(msg.data(), msg.length());
     net.send(std::move(p));

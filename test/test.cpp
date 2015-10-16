@@ -45,7 +45,7 @@ int main() {
     for(auto& vv : p->debug()) { std::cout <<"redis command recv:" << vv << std::endl; }
      std::string msg = RedisCommand::makeCommand("get player");
      BlockPtr pp(new RedisBlock(ptr->session(),msg.length()));
-     p->push(msg.data(), msg.length());
+     pp->push(msg.data(), msg.length());
      net.send(std::move(pp));
   };
 

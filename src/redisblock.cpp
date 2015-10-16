@@ -19,7 +19,7 @@
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
-#include <boost/algorithm/string/case_conv.hpp>
+/*#include <boost/algorithm/string/case_conv.hpp>*/
 
 namespace {
  
@@ -152,12 +152,12 @@ namespace FannyNet {
     }
   }
   std::string RedisCommand::makeCommand(const std::string& cmd, const std::vector<std::string>& args) {
-    std::string cmdd = cmd;
-    boost::algorithm::to_upper(cmdd);
+//     std::string cmdd = cmd;
+//     boost::algorithm::to_upper(cmdd);
     std::ostringstream oss;
     oss << REDIS_PREFIX_MULTI_BULK_REPLY << args.size() + 1 << REDIS_LBR;
-    oss << REDIS_PREFIX_SINGLE_BULK_REPLY << cmdd.size() << REDIS_LBR;
-    oss << cmdd << REDIS_LBR;
+    oss << REDIS_PREFIX_SINGLE_BULK_REPLY << cmd.size() << REDIS_LBR;
+    oss << cmd << REDIS_LBR;
     for(auto& param : args) {
       oss << REDIS_PREFIX_SINGLE_BULK_REPLY << param.size() << REDIS_LBR;
       oss << param << REDIS_LBR;

@@ -60,7 +60,6 @@ namespace FannyNet {
     reply_t m_type = no_reply;
     size_t m_mutSize = 0;
     size_t m_bufSize = 0;
-
     size_t m_recvSize = 0;
     std::vector<std::string> m_recvList;
     RedisBlock(const RedisBlock&) = delete;

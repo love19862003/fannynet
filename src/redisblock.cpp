@@ -149,7 +149,7 @@ namespace FannyNet {
         return true;
         break;
       case FannyNet::error_reply:
-        m_recvList.push_back(str.substr(3));
+        m_recvList.push_back(str.substr(4));
         m_state = _STATE_DONE_;
         return true;
         break;

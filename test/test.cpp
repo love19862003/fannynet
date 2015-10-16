@@ -68,7 +68,7 @@ int main() {
     return std::move(BlockPtr(new RedisBlock(s, len)));
   };
   //NetPropertyPointer s1(new NetProperty(Config("s1", "127.0.0.1", 9812, 1000, 2000), fc, nc, ncc));
-  NetPropertyPointer c1(new NetProperty(Config("c1", "127.0.0.1", 6739, true), fc, nc, ncc, fun));
+  NetPropertyPointer c1(new NetProperty(Config("c1", "127.0.0.1", 6379, true), fc, nc, ncc, fun));
  // NetPropertyPointer c2(new NetProperty(Config("c2", "127.0.0.1", 9812, true), fc, nc, ncc));
   //NetPropertyPointer c3(new NetProperty(Config("c3", "127.0.0.1", 9812, true), fc, nc, ncc));
   //net.add(std::move(s1));

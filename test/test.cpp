@@ -37,9 +37,9 @@ int main() {
     net.setStop();
   };
   FunCall fc = [&] (const NetName& name, const BlockPtr& ptr) { 
-    std::cout << "handle net:" << name << 
-              " session:" << ptr->session() 
-              << " msg:" << std::string(ptr->data()->data(), ptr->data()->length()) << std::endl;
+//     std::cout << "handle net:" << name << 
+//               " session:" << ptr->session() 
+//               << " msg:" << std::string(ptr->data()->data(), ptr->data()->length()) << std::endl;
 
     RedisBlock* p = static_cast<RedisBlock*>(ptr.get());
     for(auto& vv : p->debug()) { std::cout <<"redis command recv:" << vv << std::endl; }

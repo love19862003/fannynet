@@ -59,8 +59,8 @@ namespace FannyNet {
   private:
     std::string m_temp;
     reply_t m_type = no_reply;
-    size_t m_mutSize = 0;
-    size_t m_bufSize = 0;
+    int m_mutSize = 0;
+    int m_bufSize = 0;
     std::vector<std::string> m_recvList;
     RedisBlock(const RedisBlock&) = delete;
     RedisBlock& operator = (const RedisBlock&) = delete;

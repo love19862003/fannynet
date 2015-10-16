@@ -113,6 +113,8 @@ namespace FannyNet {
   std::string RedisCommand::makeCommand(const std::string& cmd, const std::vector<std::string>& args) {
     std::ostringstream oss;
     oss << REDIS_PREFIX_MULTI_BULK_REPLY << args.size() + 1 << REDIS_LBR;
+    oss << REDIS_PREFIX_SINGLE_BULK_REPLY << cmd.size() << REDIS_LBR;
+    oss << cmd << REDIS_LBR;
     for(auto& param : args) {
       oss << REDIS_PREFIX_SINGLE_BULK_REPLY << param.size() << REDIS_LBR;
       oss << param << REDIS_LBR;

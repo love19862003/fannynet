@@ -112,6 +112,21 @@ namespace FannyNet {
     return m_recvList;
   }
 
+  void RedisBlock::makeRedisBuffer() {
+    size_t len = sizeof(reply_t) + sizeof(int);
+    for (auto& v : m_recvList){
+      len += sizeof(int);
+      len += v.length();
+    }
+    
+    m_data.reset(new NetBuffer(len));
+    m_data->tailPod<reply_t>(m_type);
+    m_data->tailPod<int>(static_cast<int>(m_recvList.size()));
+    for (auto& v : m_recvList){
+      m_data->tailPod<int>(static_cast<int>(v.length()));
+      m_data->tailData(v.data(), v.length());
+    }
+  }
   std::string RedisCommand::makeCommand(const std::string& cmd, const std::vector<std::string>& args) {
     std::string cmdd = cmd;
     boost::algorithm::to_upper(cmdd);
@@ -145,21 +160,25 @@ namespace FannyNet {
       case FannyNet::no_reply:
         assert(false);
         m_state = _STATE_DONE_;
+        makeRedisBuffer();
         return true; // error
         break;
       case FannyNet::status_code_reply:
         m_recvList.push_back(str.substr(1));
         m_state = _STATE_DONE_;
+        makeRedisBuffer();
         return true;
         break;
       case FannyNet::error_reply:
         m_recvList.push_back(str.substr(4));
         m_state = _STATE_DONE_;
+        makeRedisBuffer();
         return true;
         break;
       case FannyNet::int_reply:
         m_recvList.push_back(str.substr(1));
         m_state = _STATE_DONE_;
+        makeRedisBuffer();
         return true;
         break;
       case FannyNet::bulk_reply:
@@ -167,6 +186,7 @@ namespace FannyNet {
         if(m_bufSize == -1) {
           m_recvList.push_back(REDIS_MISSING);
           m_state = _STATE_DONE_;
+          makeRedisBuffer();
           return true; 
         }
         m_state = _STATE_BODY_;
@@ -177,6 +197,7 @@ namespace FannyNet {
         m_mutSize = boost::lexical_cast<int>(str.substr(1));
         if(m_mutSize == -1) {
           m_state = _STATE_DONE_;
+          makeRedisBuffer();
           return true;
         } 
       }
@@ -190,6 +211,7 @@ namespace FannyNet {
       b->erase(m_bufSize - 2);
       m_recvList.push_back(b.get());
       m_state = _STATE_DONE_;
+      makeRedisBuffer();
       return true;
     } else if(multi_bulk_reply == m_type) {
       do {
@@ -202,6 +224,7 @@ namespace FannyNet {
           m_recvList.push_back(REDIS_MISSING);
           if (m_recvList.size() == m_mutSize){
             m_state = _STATE_DONE_;
+            makeRedisBuffer();
             return true;
           }
           continue;
@@ -212,6 +235,7 @@ namespace FannyNet {
           bb->erase(m_bufSize - 2);
           m_recvList.push_back(bb.get());
           if(m_recvList.size() == m_mutSize) {
+            makeRedisBuffer();
             m_state = _STATE_DONE_;
             return true;
           }

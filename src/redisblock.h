@@ -21,7 +21,7 @@
 #include <vector>
 namespace FannyNet {
 
-  enum reply_t {
+  enum reply_t : unsigned int {
     no_reply,
     status_code_reply,
     error_reply,
@@ -51,8 +51,7 @@ namespace FannyNet {
     const std::string & get_bulk_reply() const;
     const std::vector<std::string> & get_multi_bulk_reply() const;
     const std::vector<std::string> & debug() const;
-
-
+    void makeRedisBuffer();
   protected:
     boost::optional<std::string> readline(BufferPtr& buf);
     boost::optional<std::string> readLen(BufferPtr& buf, size_t len);

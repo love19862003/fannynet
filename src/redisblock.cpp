@@ -181,56 +181,64 @@ namespace FannyNet {
       std::string& str = line.get();
       m_type = getReplyType(str);
       switch(m_type) {
-      case FannyNet::no_reply:
+      case FannyNet::no_reply:  {
         assert(false);
         m_state = _STATE_DONE_;
         m_recvSize = sizeof(reply_t);
         makeRedisBuffer();
         return true; // error
+      }
         break;
-      case FannyNet::status_code_reply:
+      case FannyNet::status_code_reply: {
         m_recvList.push_back(str.substr(1));
         m_state = _STATE_DONE_;
-        m_recvSize = sizeof(reply_t) +  m_recvList[0].size();
+        m_recvSize = sizeof(reply_t) + m_recvList[0].size();
         makeRedisBuffer();
         return true;
+      }
         break;
-      case FannyNet::error_reply:
+      case FannyNet::error_reply:{
         m_recvList.push_back(str.substr(4));
         m_recvSize = sizeof(reply_t) + m_recvList[0].size();
         m_state = _STATE_DONE_;
         makeRedisBuffer();
         return true;
+      }
         break;
-      case FannyNet::int_reply:
+      case FannyNet::int_reply: {
         m_recvList.push_back(str.substr(1));
         m_recvSize = sizeof(reply_t) + sizeof(int);
         m_state = _STATE_DONE_;
         makeRedisBuffer();
         return true;
+      }
         break;
-      case FannyNet::bulk_reply:
-        m_bufSize = boost::lexical_cast<int>(str.substr(1));
+      case FannyNet::bulk_reply: {
+        m_bufSize = 0;
+        int bufSize = boost::lexical_cast<int>(str.substr(1));
         m_recvSize = sizeof(reply_t);
-        if(m_bufSize == -1) {
+        if(bufSize == -1) {
           m_recvList.push_back(REDIS_MISSING);
           m_recvSize += REDIS_MISSING.length();
           m_state = _STATE_DONE_;
           makeRedisBuffer();
-          return true; 
+          return true;
         }
-        m_state = _STATE_BODY_;
-        m_bufSize += 2;//CRLF
+        m_bufSize = bufSize + 2;
+        m_state = _STATE_BODY_; 
+      }
         break;
       case FannyNet::multi_bulk_reply:{
         m_state = _STATE_BODY_;
-        m_mutSize = boost::lexical_cast<int>(str.substr(1));
+        m_mutSize = 0;
+        int muSize = boost::lexical_cast<int>(str.substr(1));
         m_recvSize = sizeof(reply_t) + sizeof(int);
-        if(m_mutSize == -1) {
+        if(muSize == -1) {
           m_state = _STATE_DONE_;
           makeRedisBuffer();
           return true;
-        } 
+        }
+        m_mutSize = muSize;
       }
         break;
       }
@@ -251,8 +259,9 @@ namespace FannyNet {
         if(!lline) { return false; }
         m_state = _STATE_BODY_;
         const std::string& ssub = lline.get().substr(1);
-        int m_bufSize = boost::lexical_cast<int>(ssub);
-        if(m_bufSize == -1) {
+        m_bufSize = 0;
+        int bufSize = boost::lexical_cast<int>(ssub);
+        if(bufSize == -1) {
           m_recvList.push_back(REDIS_MISSING);
           m_recvSize += REDIS_MISSING.length();
           m_recvSize += sizeof(int);
@@ -263,6 +272,7 @@ namespace FannyNet {
           }
           continue;
         } else {
+          m_bufSize = bufSize;
           m_bufSize += 2;//CRLF
           auto bb = readLen(buf, m_bufSize);
           if(!bb) { return false; }

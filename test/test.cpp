@@ -20,6 +20,8 @@
 #include <signal.h>
 #include <time.h>
 #include <chrono>
+#include <memory>
+#include "redisblock.h"
 using namespace  FannyNet;
 
 static std::atomic<bool> isRunning(true);
@@ -38,16 +40,19 @@ int main() {
     std::cout << "handle net:" << name << 
               " session:" << ptr->session() 
               << " msg:" << std::string(ptr->data()->data(), ptr->data()->length()) << std::endl;
-    std::string msg = "hello........";
-    BlockPtr p = NetBlockBase::sMakeDefaultBlock(ptr->session(), msg.length());
-    p->push(msg.data(), msg.length());
-    net.send(std::move(p));
+
+    RedisBlock* p = static_cast<RedisBlock*>(ptr.get());
+    for(auto& vv : p->debug()) { std::cout <<"redis command recv:" << vv << std::endl; }
+     std::string msg = RedisCommand::makeCommand("get player");
+     BlockPtr pp(new RedisBlock(ptr->session(),msg.length()));
+     p->push(msg.data(), msg.length());
+     net.send(std::move(pp));
   };
 
   NetCall nc = [&] (const NetName& name, const SessionId& s) {
     std::cout << "add net:" << name << " session:" << s << std::endl;
-    std::string msg = "hello........";
-    BlockPtr p = NetBlockBase::sMakeDefaultBlock(s, msg.length());
+    std::string msg = RedisCommand::makeCommand("set player a1");
+    BlockPtr p(new RedisBlock(s, msg.length()));
     p->push(msg.data(), msg.length());
     net.send(std::move(p));
   };
@@ -59,14 +64,14 @@ int main() {
   signal(SIGABRT, signalHandler);
   signal(SIGINT, signalHandler);
 
-  NetPropertyPointer s1(new NetProperty(Config("s1", "127.0.0.1", 9812, 1000, 2000), fc, nc, ncc));
-  NetPropertyPointer c1(new NetProperty(Config("c1", "127.0.0.1", 9812, true), fc, nc, ncc));
-  NetPropertyPointer c2(new NetProperty(Config("c2", "127.0.0.1", 9812, true), fc, nc, ncc));
-  NetPropertyPointer c3(new NetProperty(Config("c3", "127.0.0.1", 9812, true), fc, nc, ncc));
-  net.add(std::move(s1));
+  //NetPropertyPointer s1(new NetProperty(Config("s1", "127.0.0.1", 9812, 1000, 2000), fc, nc, ncc));
+  NetPropertyPointer c1(new NetProperty(Config("c1", "127.0.0.1", 6739, true), fc, nc, ncc));
+ // NetPropertyPointer c2(new NetProperty(Config("c2", "127.0.0.1", 9812, true), fc, nc, ncc));
+  //NetPropertyPointer c3(new NetProperty(Config("c3", "127.0.0.1", 9812, true), fc, nc, ncc));
+  //net.add(std::move(s1));
   net.add(std::move(c1));
-  net.add(std::move(c2));
-  net.add(std::move(c3));
+  //net.add(std::move(c2));
+  //net.add(std::move(c3));
   net.start();
   
   while(isRunning.load()) {

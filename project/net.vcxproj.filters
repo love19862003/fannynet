@@ -51,6 +51,9 @@
     <ClInclude Include="..\include\manager.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\redisblock.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\net_buffer.cpp">
@@ -73,6 +76,9 @@
     </ClCompile>
     <ClCompile Include="..\test\test.cpp">
       <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\redisblock.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

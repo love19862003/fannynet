@@ -45,7 +45,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../include/;../src/</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_WINSOCK_DEPRECATED_NO_WARNINGS;FINNY_NET_STATIC_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINSOCK_DEPRECATED_NO_WARNINGS;FINNY_NET_STATIC_LIB;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -77,6 +77,7 @@
     <ClInclude Include="..\src\block.h" />
     <ClInclude Include="..\src\connection.h" />
     <ClInclude Include="..\src\io_pool.h" />
+    <ClInclude Include="..\src\redisblock.h" />
     <ClInclude Include="..\src\service.h" />
     <ClInclude Include="..\src\net_type.h" />
     <ClInclude Include="..\src\tcp_object.h" />
@@ -85,6 +86,7 @@
     <ClCompile Include="..\src\block.cpp" />
     <ClCompile Include="..\src\connection.cpp" />
     <ClCompile Include="..\src\manager.cpp" />
+    <ClCompile Include="..\src\redisblock.cpp" />
     <ClCompile Include="..\src\service.cpp" />
     <ClCompile Include="..\src\net_buffer.cpp" />
     <ClCompile Include="..\src\tcp_object.cpp" />

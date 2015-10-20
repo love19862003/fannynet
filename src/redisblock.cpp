@@ -172,6 +172,9 @@ namespace FannyNet {
     auto* p = new RedisBlock(s, 0);
     p->m_data = std::move(BufferPtr(new NetBuffer(m_data->maxLength())));
     p->m_data->tailData(m_data->data(), m_data->length());
+    p->m_state = m_state;
+    p->m_type = m_type;
+    p->m_recvList = m_recvList;
     return std::move(BlockPtr(p));
   }
   bool RedisBlock::recv(BufferPtr& buf) {

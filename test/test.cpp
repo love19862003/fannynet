@@ -76,7 +76,7 @@ int main() {
   };
   FunCall fc = [&] (const NetName& name, const BlockPtr& ptr) { 
     printRedis(ptr);
-    std::string msg = RedisCommand::makeCommand("get", {"player"});
+    std::string msg = RedisCommand::makeCommand("get", {"player2"});
      BlockPtr pp(new RedisBlock(ptr->session(),msg.length()));
      pp->push(msg.data(), msg.length());
      net.send(std::move(pp));

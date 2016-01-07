@@ -172,7 +172,7 @@ namespace RedisParseSpace{
            std::string content;
            if (!readLine(buf, size, readPos, content)){ return false;}
            m_tempMaxLen = 0;
-           const std::string& ssub = content.substr(1);
+           const std::string& ssub = content.substr(1);   //"$"
            int bulkLen = boost::lexical_cast<int>(ssub);
            if(-1 == bulkLen) {
              m_recvList.push_back(REDIS_MISSING);

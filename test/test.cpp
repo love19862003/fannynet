@@ -77,8 +77,8 @@ int main() {
   FunCall fc = [&] (const NetName& name, const BlockPtr& ptr) { 
     //printRedis(ptr);
     ptr->debugStr();
-   // std::string msg = RedisCommand::makeCommand("set", {"player", "0"});
-    std::string msg = RedisCommand::makeCommand("LRANGE", {"tutorials", "0", "10"});
+    std::string msg = RedisCommand::makeCommand("get", {"player"});
+    //std::string msg = RedisCommand::makeCommand("LRANGE", {"tutorials", "0", "10"});
     BlockPtr pp(new RedisBlock2(ptr->session(), msg.length()));
      pp->push(msg.data(), msg.length());
      net.send(std::move(pp));
@@ -86,7 +86,8 @@ int main() {
 
   NetCall nc = [&] (const NetName& name, const SessionId& s) {
     std::cout << "add net:" << name << " session:" << s << std::endl;
-    std::string msg = RedisCommand::makeCommand("LRANGE", {"tutorials", "0", "10"});
+    //std::string msg = RedisCommand::makeCommand("get", {"player"});
+    std::string msg = RedisCommand::makeCommand("set", {"player", "0"});
     BlockPtr p(new RedisBlock2(s, msg.length()));
     p->push(msg.data(), msg.length());
     net.send(std::move(p));

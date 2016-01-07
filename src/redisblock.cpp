@@ -250,7 +250,7 @@ namespace FannyNet {
     if(bulk_reply == m_type) {
       auto b = readLen(buf, m_bufSize);
       if(!b) { return false; }
-      b->erase(m_bufSize - 2);
+      b->erase(m_bufSize - 2);  ////CRLF
       m_recvSize += b->length();
       m_recvList.push_back(b.get());
       m_state = _STATE_DONE_;
@@ -289,7 +289,7 @@ namespace FannyNet {
             return true;
           }
         }
-      } while(m_recvList.size() == m_mutSize);
+      } while(m_recvList.size() != m_mutSize);
 
     } else { assert(false); }
     return false;

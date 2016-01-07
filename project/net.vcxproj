@@ -74,6 +74,7 @@
     <ClInclude Include="..\include\fannynet.h" />
     <ClInclude Include="..\include\manager.h" />
     <ClInclude Include="..\include\net_buffer.h" />
+    <ClInclude Include="..\include\redisparser.h" />
     <ClInclude Include="..\src\block.h" />
     <ClInclude Include="..\src\connection.h" />
     <ClInclude Include="..\src\io_pool.h" />

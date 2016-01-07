@@ -129,6 +129,7 @@ namespace FannyNet {
     virtual bool push(const char* data, size_t len) = 0;
     virtual BlockPtr clone(SessionId) = 0;
     virtual bool recv(BufferPtr& buf) = 0;
+    virtual void debugStr() const { }
   protected:
    
   protected:

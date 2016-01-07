@@ -87,11 +87,12 @@ namespace FannyNet {
       struct hostent *hptr = gethostbyname(ip.c_str());
       if(hptr) {
         char str[32] = {0};
-        sprintf(str, "%d.%d.%d.%d",
-                (hptr->h_addr_list[0][0] & 0x00ff),
-                (hptr->h_addr_list[0][1] & 0x00ff),
-                (hptr->h_addr_list[0][2] & 0x00ff),
-                (hptr->h_addr_list[0][3] & 0x00ff));
+        //inet_ntop(hptr->h_addrtype, hptr->h_addr_list, str, sizeof(str));
+         sprintf(str, "%d.%d.%d.%d",
+                 (hptr->h_addr_list[0][0] & 0x00ff),
+                 (hptr->h_addr_list[0][1] & 0x00ff),
+                 (hptr->h_addr_list[0][2] & 0x00ff),
+                 (hptr->h_addr_list[0][3] & 0x00ff));
         ip = str;
       }
       m_endpoint.address(boost::asio::ip::address_v4::from_string(ip));
@@ -99,7 +100,7 @@ namespace FannyNet {
     virtual ~TcpClient() {
       m_session.reset();
     }
-    virtual bool doStart() override {
+    virtual bool  doStart() override {
       if(m_session) { m_session->connect(m_endpoint); }
       return true;
     }

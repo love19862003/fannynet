@@ -31,7 +31,7 @@ namespace RedisParseSpace{
   const std::string  REDIS_PREFIX_INT_REPLY(":");
   const std::string  REDIS_PREFIX_LBR("\n");
   const std::string  REDIS_WHITESPACE(" \f\n\r\t\v");
-  const std::string  REDIS_MISSING("**nonexistent-key**");
+  const std::string  REDIS_MISSING("**missing-key**");
 
 
   enum reply_t : unsigned int {
